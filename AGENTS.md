@@ -134,12 +134,18 @@ data/           运行时数据，gitignored
 ## Git 版本管理规则
 
 - 本项目必须使用 Git 管理，默认分支为 `main`。
-- Agent 开始修改前先查看 `git status --short`，不要覆盖用户未提交的改动。
+- Agent 开始修改前先查看 `git status --short --branch`，不要覆盖用户未提交的改动。
 - 运行时数据、密钥、本机依赖和构建产物不得提交，包括 `.env`、`data/`、`venv/`、`node_modules/`、日志、数据库文件、模型权重和前端构建产物。
-- 一次提交只覆盖一组相关变更，提交信息要简短说明目的。
 - 远端仓库默认命名为 `srt-flow`，远端名使用 `origin`。
+- `main` 分支必须保持可运行、可回滚，不直接在 `main` 上开发新 Feature。
+- 新 Feature、架构调整、跨模块改动必须从最新 `main` 新建分支实现，分支命名建议使用 `feature/<short-name>`、`fix/<short-name>`、`docs/<short-name>`。
+- 小型文档修正或用户明确要求的即时改动，可以在 `main` 上直接提交，但提交前仍需确认工作区干净且变更范围清楚。
+- Feature 分支完成后，先执行必要检查，再合并回 `main`；合并方式优先使用 `--no-ff` 或 Pull Request，保留 Feature 边界。
+- 合并回 `main` 后再推送 `origin/main`；不要把未完成的实验性分支合并进 `main`。
+- 一次提交只覆盖一组相关变更，提交信息要简短说明目的，推荐格式：`feat: ...`、`fix: ...`、`docs: ...`、`chore: ...`。
+- 推送前检查 `git status --short --branch`、`git log --oneline -5` 和远端地址，确认没有误提交敏感文件或运行时产物。
 - 未经用户明确要求，不执行 `git reset --hard`、强制推送或删除分支。
-- 推送到 GitHub 前先确认远端地址和提交范围，避免泄露本机配置与私有数据。
+- 如需清理历史、重写提交或变基公共分支，必须先向用户说明风险并获得明确确认。
 
 ## API 规范
 
