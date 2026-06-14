@@ -1,0 +1,58 @@
+# SRT Flow - Docker Ignore File
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+.kiro
+.agent
+*.swp
+*.swo
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+.env.local
+*.egg-info/
+.eggs/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Data (mounted as volume)
+data/
+*.db
+*.sqlite
+
+# Logs
+*.log
+
+# Documentation (not needed in container)
+docs/
+tasks/
+
+# Tests
+tests/
+*_test.py
+test_*.py
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db

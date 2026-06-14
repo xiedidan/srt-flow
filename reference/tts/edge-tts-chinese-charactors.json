@@ -1,0 +1,50 @@
+"voices": [
+        {
+            "id": 61,
+            "name": "zh-CN-XiaoxiaoNeural",
+            "label": "晓晓 中文 女",
+            "emotions": []
+        },
+        {
+            "id": 62,
+            "name": "zh-CN-XiaoyiNeural",
+            "label": "晓依 中文 女",
+            "emotions": []
+        },
+        {
+            "id": 63,
+            "name": "zh-CN-YunjianNeural",
+            "label": "云健 中文 男",
+            "emotions": []
+        },
+        {
+            "id": 64,
+            "name": "zh-CN-YunxiNeural",
+            "label": "云希 中文 男",
+            "emotions": []
+        },
+        {
+            "id": 65,
+            "name": "zh-CN-YunxiaNeural",
+            "label": "云夏 中文 男",
+            "emotions": []
+        },
+        {
+            "id": 66,
+            "name": "zh-CN-YunyangNeural",
+            "label": "云扬 中文 男",
+            "emotions": []
+        },
+        {
+            "id": 67,
+            "name": "zh-CN-liaoning-XiaobeiNeural",
+            "label": "晓北 辽宁 女",
+            "emotions": []
+        },
+        {
+            "id": 68,
+            "name": "zh-CN-shaanxi-XiaoniNeural",
+            "label": "晓妮 陕西 女",
+            "emotions": []
+        }
+    ],

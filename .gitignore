@@ -1,0 +1,63 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+deploy/.env
+deploy/.env.*
+!deploy/.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Runtime data
+data/
+logs/
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# Python
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+frontend/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+frontend/dist/
+coverage/
+
+# Local editor/system files
+.vscode/
+.idea/
+.claude/settings.local.json
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Large local model artifacts
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx

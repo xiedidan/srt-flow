@@ -1,0 +1,64 @@
+# SRT Flow - Docker Compose Configuration
+# Usage: docker-compose up -d
+
+version: "3.8"
+
+services:
+  srt-flow:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: srt-flow
+    restart: unless-stopped
+    ports:
+      - "8010:8010"
+    volumes:
+      # Data persistence
+      - ../data:/app/data
+      # Optional: mount .env file
+      - ../.env:/app/.env:ro
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8010
+      - DEBUG=false
+      - DATABASE_PATH=/app/data/srtflow.db
+      - DATA_DIR=/app/data
+      - DOWNLOADS_DIR=/app/data/downloads
+      - LOG_DIR=/app/data/logs
+      - LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8010/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# For development with hot reload
+  srt-flow-dev:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: srt-flow-dev
+    profiles:
+      - dev
+    ports:
+      - "8010:8010"
+    volumes:
+      - ../data:/app/data
+      - ../backend:/app/backend:ro
+      - ../.env:/app/.env:ro
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8010
+      - DEBUG=true
+      - DATABASE_PATH=/app/data/srtflow.db
+      - DATA_DIR=/app/data
+      - DOWNLOADS_DIR=/app/data/downloads
+      - LOG_DIR=/app/data/logs
+      - LOG_LEVEL=DEBUG
+    command: uvicorn backend.app.main:app --host 0.0.0.0 --port 8010 --reload

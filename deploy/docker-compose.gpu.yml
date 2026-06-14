@@ -1,0 +1,62 @@
+# SRT Flow - Docker Compose with GPU Support
+# Usage: docker-compose -f docker-compose.gpu.yml up -d
+#
+# Prerequisites:
+# 1. NVIDIA Driver installed on host
+# 2. NVIDIA Container Toolkit installed
+#    https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html
+
+version: "3.8"
+
+services:
+  srt-flow-gpu:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.gpu
+    container_name: srt-flow-gpu
+    restart: unless-stopped
+    ports:
+      - "8010:8010"
+    volumes:
+      # Data persistence
+      - ../data:/app/data
+      # Model cache (Whisper models)
+      - srt-flow-models:/app/models
+      - ~/.cache/whisper:/root/.cache/whisper
+      # Optional: mount .env file
+      - ../.env:/app/.env:ro
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8010
+      - DEBUG=false
+      - DATABASE_PATH=/app/data/srtflow.db
+      - DATA_DIR=/app/data
+      - DOWNLOADS_DIR=/app/data/downloads
+      - LOG_DIR=/app/data/logs
+      - LOG_LEVEL=INFO
+      # GPU settings
+      - CUDA_VISIBLE_DEVICES=0
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8010/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  srt-flow-models:
+    name: srt-flow-models
